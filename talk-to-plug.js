@@ -65,59 +65,60 @@ var ttp = {
         else if(ttp.tmp.ready === true) {
             var cases = ["test", "dislike", "grab", "snooze", "refresh", "mute", "unmute"], msg;
             if (cases.indexOf(data.split(" ")[0]) > -1){
-                ttp.recognition.abort(); 
-                setTimeout(function() { 
-                    ttp.recognition.start(); 
-                }, 750); 
+                ttp.recognition.abort();
+                setTimeout(function() {
+                    ttp.recognition.start();
+                }, 750);
             }
             switch(data.split(" ")[0]) {
-                case "test": 
-                    ttp.speak("Hello!"); 
+                case "test":
+                    ttp.speak("Hello!");
                     msg = "No longer ready.";
                     break;
-                case "like": 
-                    $("#woot").click(); 
-                    ttp.speak("Wooted this track for you."); 
+                case "like":
+                    $("#woot").click();
+                    ttp.speak("Wooted this track for you.");
                     msg = "Wooted";
                     break;
-                case "dislike": 
-                    $("#meh").click(); 
-                    ttp.speak("Mehed this track for you."); 
+                case "dislike":
+                    $("#meh").click();
+                    ttp.speak("Mehed this track for you.");
                     msg = "Meh'd";
                     break;
-                case "grab": 
-                    $(".icon-grab").click(); 
-                    $($(".grab").children(".menu").children().children("li").children(".icon.icon-check-purple")).mousedown(); ttp.speak("Grabbed this track for you."); 
+                case "grab":
+                    $(".icon-grab").click();
+                    $($(".grab").children(".menu").children().children("li").children(".icon.icon-check-purple")).mousedown(); ttp.speak("Grabbed this track for you.");
                     msg = "Grabbed";
                     break;
-                case "snooze": 
-                    $(".snooze").click(); 
-                    ttp.speak("Snoozed this track for you."); 
+                case "turn":
+                    $(".snooze").click();
+                    ttp.speak("Snoozed this track for you.");
                     msg = "Snoozed";
                     break;
-                case "refresh": 
-                    $(".refresh").click(); 
-                    ttp.speak("Refreshed this track for you."); 
+                case "refresh":
+                    $(".refresh").click();
+                    ttp.speak("Refreshed this track for you.");
                     msg = "Refreshed";
                     break;
-                case "mute": 
-                    API.setVolume(0); 
-                    ttp.speak("Muted this track for you."); 
+                case "mute":
+                    API.setVolume(0);
+                    ttp.speak("Muted this track for you.");
                     msg = "Muted";
                     break;
-                case "unmute": 
-                    API.setVolume(100); 
-                    ttp.speak("Unmuted this track for you."); 
+                case "unmute":
+                    API.setVolume(100);
+                    ttp.speak("Unmuted this track for you.");
                     msg = "Unmuted";
                     break;
             } if (cases.indexOf(data.split(" ")[0]) > -1){
+                ttp.recognition.abort();
                 if (msg !== null){
-                    if(debug) console.log("[DEBUG] "+msg); 
+                    if(debug) console.log("[DEBUG] "+msg);
                 }
-                ttp.tmp.ready = false; 
-                if(debug) console.log("[DEBUG] No longer ready."); 
+                ttp.tmp.ready = false;
+                if(debug) console.log("[DEBUG] No longer ready.");
             }
-        } else { 
+        } else {
 
         }
     }
@@ -128,5 +129,5 @@ ttp.__init();
 * @Author: xBytez
 * @Date:   2015-05-30 14:48:53
 * @Last Modified by:   xBytez
-* @Last Modified time: 2015-05-30 21:24:03
+* @Last Modified time: 2015-05-31 01:32:55
 */
