@@ -16,7 +16,7 @@ var ttp = {
     },
     recognition: new webkitSpeechRecognition(),
     tts: new SpeechSynthesisUtterance(),
-    speak: function(txt) { ttp.tts.text = txt; speechSynthesis.speak(ttp.tts) },
+    speak: function(txt) { ttp.tts.text = txt; speechSynthesis.speak(ttp.tts); },
     __init: function() {
         /*==========  Turn off old settings  ==========*/
         $("#speechToggle").off();
@@ -36,7 +36,7 @@ var ttp = {
         ttp.speak("Ready.");
 
         /*==========  Start the events  ==========*/
-        ttp.__startEvents(); if(debug) console.log("[DEBUG] Started.")
+        ttp.__startEvents(); if(ttp.settings.debug) console.log("[DEBUG] Started.");
     },
     __startEvents: function() {
         $('#now-playing-bar').append('<div id="speechToggle" style="position:relative; top:38px; right: 22px; height: 10px; width: 10px; background-color: white; border-radius: 25px; opacity: .4; z-index: 10" onmouseover="this.style.opacity = 1" onmouseout="this.style.opacity = 0.4"></div>');
@@ -48,19 +48,19 @@ var ttp = {
         this.recognition.onresult = function(data) {
             for (var i = data.resultIndex; i < data.results.length; i++) {
             if(!data.results[i].isFinal) ttp.__onSpeech(data.results[i][0].transcript);            }
-        }
+        };
     },
     __onSpeech: function(data) {
         data = data.toLowerCase();
         if(data.charAt(0) === " ") data = data.slice(1);
         if(this.settings.debug) console.log("[DEBUG-SPEECH]", data);
-        if(ttp.tmp.ready === false && /(hi|yo|hey|sup|hot|heart|hyde|high|how|a)\ (plug|plus|pug|park|punk)|iplug/i.test(data)) {
+        if(ttp.tmp.ready === false && /(hi|yo|hey|sup|hot|heart|hyde|high|how|a|okay)\ (plug|plus|pug|park|punk)|iplug/i.test(data)) {
             ttp.tmp.ready = true;
-            if(debug) console.log("[DEBUG] Ready");
+            if(ttp.settings.debug) console.log("[DEBUG] Ready");
             ttp.recognition.abort();
-            ttp.speak("Yes?");
+            
             setTimeout(function() { ttp.recognition.start(); }, 750);
-            setTimeout(function() { ttp.tmp.ready = false; if(debug) console.log("[DEBUG] No longer ready.") }, 12500);
+            setTimeout(function() { ttp.tmp.ready = false; if(ttp.settings.debug) console.log("[DEBUG] No longer ready."); }, 12500);
         }
         else if(ttp.tmp.ready === true) {
             var cases = ["test", "dislike", "grab", "snooze", "refresh", "mute", "unmute"], msg;
@@ -113,16 +113,16 @@ var ttp = {
             } if (cases.indexOf(data.split(" ")[0]) > -1){
                 ttp.recognition.abort();
                 if (msg !== null){
-                    if(debug) console.log("[DEBUG] "+msg);
+                    if(ttp.settings.debug) console.log("[DEBUG] "+msg);
                 }
                 ttp.tmp.ready = false;
-                if(debug) console.log("[DEBUG] No longer ready.");
+                if(ttp.settings.debug) console.log("[DEBUG] No longer ready.");
             }
         } else {
 
         }
     }
-}
+};
 
 ttp.__init();
 /*
